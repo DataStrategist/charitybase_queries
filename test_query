@@ -1,0 +1,24 @@
+curl 'https://charitybase.uk/api/graphql' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Connection: keep-alive' -H 'DNT: 1' -H 'Origin: https://charitybase.uk' --data-binary '{"query":"query CountAggregateList {\n  CHC {\n    getCharities(\n      filters: { search: \"Disability\", \n        # causes:{some:[\"104\", \"115\"]},\n        operations:{some:[\"306\", \"307\"]},\n        finances: { latestIncome: { gte: 1000000 } } }\n    ) \n    {\n      count\n      list {\n        id\n        names {value}\n        activities\n        causes {name}\n        beneficiaries {name}\n        operations {name}\n        finances {income, spending, financialYear {end}}\n      }\n    }\n  }\n}\n"}' --compressed
+
+query CountAggregateList {
+  CHC {
+    getCharities(
+      filters: { search: "Disability",
+        # causes:{some:["104", "115"]},
+        operations:{some:["306", "307"]},
+        finances: { latestIncome: { gte: 1000000 } } }
+    )
+    {
+      count
+      list {
+        id
+        names {value}
+        activities
+        causes {name}
+        beneficiaries {name}
+        operations {name}
+        finances {income, spending, financialYear {end}}
+      }
+    }
+  }
+}
